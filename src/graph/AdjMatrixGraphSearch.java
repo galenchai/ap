@@ -5,25 +5,24 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-@SuppressWarnings("all")
 public class AdjMatrixGraphSearch {
 
 	private int vertexNum;
-	private Vector[] vector;
+	private Vector<Integer>[] vector; //matrix
 	private int[] visited;
-	private Stack stack;
-	private Stack result;
-	private Queue queue;
-	public AdjMatrixGraphSearch() {};
+	private Stack<Integer> stack;
+	private Stack<Integer> result;
+	private Queue<Integer> queue;
 
+	@SuppressWarnings("unchecked")
 	public AdjMatrixGraphSearch(int num) {
 		vertexNum = num;
 		vector = new Vector[vertexNum];
 		visited = new int[vertexNum];
-		for (int t : visited) t = 0;
-		stack = new Stack();
-		result = new Stack();
-		queue = new PriorityQueue();
+		for (int i = 0; i < vertexNum; i ++) visited[i] = 0;
+		stack = new Stack<Integer>();
+		result = new Stack<Integer>();
+		queue = new PriorityQueue<Integer>();
 	}
 	/**
 	 * add undirected edge
@@ -55,9 +54,9 @@ public class AdjMatrixGraphSearch {
 			if (i > j) { //exchange i & j
 				int k = i; i = j; j = k; 
 			}
-			if (vector[i] == null) vector[i] = new Vector(8);
+			if (vector[i] == null) vector[i] = new Vector<Integer>(8);
 			for (int q = 0; q < vector[i].size(); q++) {
-				if (((Integer) vector[i].get(q)).intValue() == j) {
+				if ((vector[i].get(q)).intValue() == j) {
 					System.out.println("Vertex" + i + " and " + " vertex " + j + " exist edge");
 					return true;
 				}
@@ -71,7 +70,7 @@ public class AdjMatrixGraphSearch {
 		stack.push(0);
 		//if stack is not null, loop search
 		while (!stack.isEmpty()) {
-			int v = getAdjUnvisitedVertex((Integer) stack.peek());
+			int v = getAdjUnvisitedVertex(stack.peek());
 			//search for adj vertex that hasn't been visited, pop up it from stack, mark it as visited
 			if (v == -1) {
 				result.push(stack.peek());
@@ -90,7 +89,7 @@ public class AdjMatrixGraphSearch {
 		visited[0] = 1;
 		queue.add(0);
 		while (!queue.isEmpty()) {
-			int v = (Integer) queue.poll();
+			int v = queue.poll();
 			result.push(v);
 			int i;
 			while ((i = getAdjUnvisitedVertex(v)) != -1) {
@@ -102,22 +101,40 @@ public class AdjMatrixGraphSearch {
 		// result.list();
 	}
 
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
 	public int getAdjUnvisitedVertex(int v) {
 		int temp;
 		//check if adj vertext is null
 		if (vector[v] != null) {
 			//over all the adj vertexs
 			for (int j = 0; j < vector[v].size(); j++) {
-				temp = ((Integer) vector[v].get(j)).intValue();
-				//check if adj vertext has been visited
+				temp = vector[v].get(j);
+				//check if adj vertex has been visited
 				if (visited[temp] == 0)
-					return ((Integer) vector[v].get(j)).intValue();
+					return vector[v].get(j);
 			}
 		}
 		return -1;
 	}
 
-	public Stack getResult() {
+	public Stack<Integer> getResult() {
 		return result;
+	}
+	
+	public static void main(String[] args) {
+		AdjMatrixGraphSearch graph = new AdjMatrixGraphSearch(6);  
+        graph.addEdge(0, 1);  
+        graph.addEdge(0, 5);  
+        graph.addEdge(0, 2);  
+        graph.addEdge(1, 2);  
+        graph.addEdge(2, 3);  
+        graph.addEdge(1, 4);  
+        graph.addEdge(2, 4);  
+          
+        graph.bsf();  
 	}
 }
