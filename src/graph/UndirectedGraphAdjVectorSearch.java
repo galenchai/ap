@@ -5,7 +5,7 @@ import java.util.Queue;
 import java.util.Stack;
 import java.util.Vector;
 
-public class AdjMatrixGraphSearch {
+public class UndirectedGraphAdjVectorSearch {
 
 	private int vertexNum;
 	private Vector<Integer>[] vector; //matrix
@@ -15,7 +15,7 @@ public class AdjMatrixGraphSearch {
 	private Queue<Integer> queue;
 
 	@SuppressWarnings("unchecked")
-	public AdjMatrixGraphSearch(int num) {
+	public UndirectedGraphAdjVectorSearch(int num) {
 		vertexNum = num;
 		vector = new Vector[vertexNum];
 		visited = new int[vertexNum];
@@ -39,9 +39,7 @@ public class AdjMatrixGraphSearch {
 			if (I > J) { //exchange I & J
 				int k = I; I = J; J = k; 
 			}
-			if (isEdgeExists(I, J)) {
-				return false;
-			}
+			if (isEdgeExists(I, J)) return false;
 			vector[I].add(J);
 			return true;
 		}
@@ -57,7 +55,7 @@ public class AdjMatrixGraphSearch {
 			if (vector[i] == null) vector[i] = new Vector<Integer>(8);
 			for (int q = 0; q < vector[i].size(); q++) {
 				if ((vector[i].get(q)).intValue() == j) {
-					System.out.println("Vertex" + i + " and " + " vertex " + j + " exist edge");
+					System.out.println(" An edge exists between vertex" + i + " and " + " vertex " + j);
 					return true;
 				}
 			}
@@ -78,7 +76,6 @@ public class AdjMatrixGraphSearch {
 			} else {
 				visited[v] = 1;
 				stack.push(v);
-
 			}
 		}
 		System.out.println("Depth First Search: ");
@@ -108,7 +105,7 @@ public class AdjMatrixGraphSearch {
 	 */
 	public int getAdjUnvisitedVertex(int v) {
 		int temp;
-		//check if adj vertext is null
+		//check if adj vertex is null
 		if (vector[v] != null) {
 			//over all the adj vertexs
 			for (int j = 0; j < vector[v].size(); j++) {
@@ -126,7 +123,7 @@ public class AdjMatrixGraphSearch {
 	}
 	
 	public static void main(String[] args) {
-		AdjMatrixGraphSearch graph = new AdjMatrixGraphSearch(6);  
+		UndirectedGraphAdjVectorSearch graph = new UndirectedGraphAdjVectorSearch(6);  
         graph.addEdge(0, 1);  
         graph.addEdge(0, 5);  
         graph.addEdge(0, 2);  
@@ -138,3 +135,4 @@ public class AdjMatrixGraphSearch {
         graph.bsf();  
 	}
 }
+
