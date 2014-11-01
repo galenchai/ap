@@ -7,7 +7,7 @@ public class KnapsackProblemTest {
         Sack[] bags = new Sack[] {  
                 new Sack(2,13), new Sack(1,10),  
                 new Sack(3,24), new Sack(2,15),  
-                new Sack(4,28), new Sack(5,33),  
+                new Sack(4,28), new Sack(5,42),  
                 new Sack(3,20), new Sack(1, 8)  
         };  
         int totalWeight = 12;  
