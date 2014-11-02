@@ -1,5 +1,10 @@
 package graph;
 
+/**
+ * Backtracking
+ * @author Vinson
+ *
+ */
 public class EightQueen {
 	
 	private static int[][] past = new int[8][8];
