@@ -1,10 +1,8 @@
 package tree;
 
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 
 /**
- * four order method for a binary tree
+ * three order method for a binary tree
  * @author Vinson
  *
  */
@@ -15,7 +13,7 @@ public class TreeOrder {
 	 * time complexity is O(n)
 	 * @param root
 	 */
-	public void preOrder(Node root) {
+	public void preOrder(TreeNode root) {
 		if (null == root) return;
 		System.out.print(root.getValue() + ", ");
 		preOrder(root.getLeftChild());
@@ -27,7 +25,7 @@ public class TreeOrder {
 	 * time complexity is O(n)
 	 * @param root
 	 */
-	public void inOrder(Node root) {
+	public void inOrder(TreeNode root) {
 		if (null == root) return;
 		inOrder(root.getLeftChild());
 		System.out.print(root.getValue() + ", ");
@@ -39,62 +37,29 @@ public class TreeOrder {
 	 * time complexity is O(n)
 	 * @param root
 	 */
-	public void postOrder(Node root) {
+	public void postOrder(TreeNode root) {
 		if (null == root) return;
 		postOrder(root.getLeftChild());
 		postOrder(root.getRightChild());
 		System.out.print(root.getValue() + ", ");
 	}
 	
-	/**
-	 * print node level by level
-	 * time complexity is O(n) 
-	 * The space complexity is the largest number of all the levels, the best is O(1) and the worst is O((n+1)/2))
-	 * @param root
-	 */
-	public void levelOrder(Node root) {
-		//TODO difference between queues
-		Queue<Node> q = new ArrayBlockingQueue<Node>(10);
-		q.add(root);
-		while (!q.isEmpty()) {
-			Node n = q.poll();
-			System.out.print(n.getValue() + ", ");
-			if (null != n.getLeftChild()) q.add(n.getLeftChild());
-			if (null != n.getRightChild()) q.add(n.getRightChild());
-		}
-	}
-	
-	/**
-	 *               A
-	 *              / \
-	 *             D   C
-	 *            / \   \
-	 *           F   B   G
-	 * 
-	 */
-	public Node genTestData() {
-		Node f = new Node();
-		f.setValue("F");
-		Node b = new Node();
-		b.setValue("B");
-		Node g = new Node();
-		g.setValue("G");
+	public TreeNode genTestData() {
+		/**
+		 *         A
+		 *        / \
+		 *       B   C
+		 *      / \  /
+		 *     E  G H
+		 */
+		TreeNode treeNodeE = new TreeNode("E", null, null);
+		TreeNode treeNodeG = new TreeNode("G", null, null);
+		TreeNode treeNodeH = new TreeNode("H", null, null);
+		TreeNode treeNodeB = new TreeNode("B", treeNodeE, treeNodeG);
+		TreeNode treeNodeC = new TreeNode("C", treeNodeH, null);
+		TreeNode treeNodeA = new TreeNode("H", treeNodeB, treeNodeC);
 		
-		Node d = new Node();
-		d.setValue("D");
-		d.setLeftChild(f);
-		d.setRightChild(b);
-		
-		Node c = new Node();
-		c.setValue("C");
-		c.setRightChild(g);
-		
-		Node a = new Node();
-		a.setValue("A");
-		a.setLeftChild(d);
-		a.setRightChild(c);
-		
-		return a;
+		return treeNodeA;
 	}
 	
 	public static void main(String args[]) {
@@ -104,8 +69,6 @@ public class TreeOrder {
 		to.inOrder(to.genTestData());
 		System.out.println();
 		to.postOrder(to.genTestData());
-		System.out.println();
-		to.levelOrder(to.genTestData());
 	}
 	
 }
