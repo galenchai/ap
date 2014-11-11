@@ -28,6 +28,17 @@ public class HeapSort {
 		heap.set(c, node);
 	}
 	
+	/**
+	 * Always delete root node and add the last to it 
+	 * @param heap
+	 */
+	public void deleteNode(List<Integer> heap) {
+		Integer top = heap.get(heap.size() - 1);
+		heap.set(0, top);
+		heap.remove(heap.size() - 1);
+		downMaxNode(heap, 0, heap.size() - 1);
+	}
+	
 	public void downMaxNode(List<Integer> heap, int start, int size) {
 		Integer top = heap.get(start);
 		int p = start, c = 2 * p + 1;
@@ -41,30 +52,20 @@ public class HeapSort {
 		heap.set(p, top);
 	}
 	
-	/**
-	 * Always delete root node and add the last to it 
-	 * @param heap
-	 */
-	public void deleteNode(List<Integer> heap) {
-		Integer top = heap.get(heap.size() - 1);
-		heap.set(0, top);
-		heap.remove(heap.size() - 1);
-		downMaxNode(heap, 0, heap.size() - 1);
-	}
-	
-	public void initHeap(List<Integer> tree, int size) {
+	public void initHeap(List<Integer> heap, int size) {
 		for (int i = size/2 - 1; i >= 0; i --) {
-			downMaxNode(tree, i, size);
+			downMaxNode(heap, i, size);
 		}
 	}
 	
 	public void heapSort(List<Integer> heap) {
 		Integer swap = null;
+		initHeap(heap, heap.size());
 		for (int i = heap.size() - 1; i > 0; i --) {
-			initHeap(heap, i + 1);
 			swap = heap.get(0);
 			heap.set(0, heap.get(i));
 			heap.set(i, swap);
+			downMaxNode(heap, 0, i - 1);
 		}
 	}
 	
