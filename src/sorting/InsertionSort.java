@@ -9,19 +9,14 @@ public class InsertionSort {
 	public void insertionSort(int[] array) {
 		int temp;
 		for (int i = 1; i < array.length; i ++) {
-			if (array[i] < array[i - 1]) {
-				int j;
-				temp = array[i];
-				for (j = i - 2; j >=0; j --) {
-					if (array[j] < array[i]) {
-						j ++;
-						break;
-					}
+			for (int j = i; j > 0; j --) {
+				if (array[j] < array[j - 1]) {
+					temp = array[j];
+					array[j] = array[j - 1];
+					array[j - 1] = temp;
+				} else {
+					break;
 				}
-				for (int k = i; k > j; k --) {
-					array[k] = array[k - 1];
-				}
-				array[j] = temp;
 			}
 		}
 		
